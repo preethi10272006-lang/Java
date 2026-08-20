@@ -1,0 +1,69 @@
+package java9;
+
+import java.util.*;
+import java.util.Scanner;
+class TableThread extends Thread
+{
+        int number;
+        TableThread(int number)
+        {
+                this.number=number;
+        }
+        public void run()
+        {
+                /*System.out.println("\n Multiplication Table For"+number+":");
+                for(int i=1;i<=10;i++)
+                {
+                        System.out.println(number+"x"+i+"="+(number*i));
+                }
+                System.out.println("\n-----------------------\n");*/
+                try
+                {
+                        Thread.sleep(200);
+                }
+                catch(InterruptedException e)
+                {
+                        System.out.println(e);
+                }
+        }
+        void method(int n)
+        {
+                System.out.println("\n Multiplication Table For"+number+":");
+                for(int i=1;i<=10;i++)
+                {
+                        System.out.println(number+"x"+i+"="+(number*i));
+                }
+                System.out.println("\n-----------------------\n");
+        }
+
+}
+public class MultiplicationTable
+{
+        public static void main(String[] args)
+        {
+                Scanner sc = new Scanner(System.in);
+                System.out.println("Enter first no:");
+                int n1 = sc.nextInt();
+                System.out.println("Enter second no:");
+                int n2 = sc.nextInt();
+                System.out.println("Enter third no:");
+                int n3 = sc.nextInt();
+
+
+                TableThread t1 = new TableThread(n1);
+                TableThread t2 = new TableThread(n2);
+                TableThread t3 = new TableThread(n3);
+
+                t1.method(n1);
+                t2.method(n2);
+                t3.method(n3);
+
+                t1.start();
+                t2.start();
+                t3.start();
+
+                sc.close();
+        }
+}
+
+
