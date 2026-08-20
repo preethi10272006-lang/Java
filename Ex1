@@ -1,0 +1,62 @@
+class Employee {
+    int id;
+    String name;
+    int age;
+    double basicPay;
+    String gender;
+    String deptName;
+    String city;
+
+    public Employee(int id, String name, int age, double basicPay, String gender, String deptName, String city) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.basicPay = basicPay;
+        this.gender = gender;
+        this.deptName = deptName;
+        this.city = city;
+    }
+
+    double calculateHRA() {
+        return 0.10 * basicPay;
+    }
+
+    double calculateDA() {
+        return 0.30 * basicPay;
+    }
+
+    double calculateGrossSalary() {
+        return basicPay + calculateHRA() + calculateDA();
+    }
+
+    double calculateIncomeTax(double grossSalary) {
+        if (grossSalary > 100000) {
+            return 0.10 * grossSalary;
+        }
+        return 0.0;
+    }
+
+    public double calculateNetSalary() {
+        double grossSalary = calculateGrossSalary();
+        double incomeTax = calculateIncomeTax(grossSalary);
+        return grossSalary - incomeTax;
+    }
+
+    public void displayEmployeeInfo() {
+        System.out.println("Employee ID: " + id);
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Basic Pay: " + basicPay);
+        System.out.println("Gender: " + gender);
+        System.out.println("Department: " + deptName);
+        System.out.println("City: " + city);
+        System.out.println("Net Salary: " + calculateNetSalary());
+    }
+}
+
+public class PayrollSystem {
+    public static void main(String[] args) {
+        Employee emp1 = new Employee(1, "Priya", 18, 120000, "Female", "CSE", "New York");
+        emp1.displayEmployeeInfo();
+    }
+}
