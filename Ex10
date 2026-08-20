@@ -1,0 +1,113 @@
+package EX10;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class GenericSorterApp {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("--- Generic Sorter Application ---");
+        System.out.println("What type of data do you want to sort?");
+        System.out.println("  1: Integers");
+        System.out.println("  2: Strings");
+        System.out.print("Enter your choice (1 or 2): ");
+
+        String choice = scanner.next();
+
+        if (choice.equals("1")) {
+            handleIntegers(scanner);
+        } else if (choice.equals("2")) {
+            handleStrings(scanner);
+        } else {
+            System.out.println("Invalid choice. Exiting program.");
+        }
+
+        scanner.close();
+    }
+
+    private static void handleIntegers(Scanner scanner) {
+        GenericStore<Integer> intStore = new GenericStore<>();
+        System.out.println("\nEnter integers one by one. Type 'done' when finished.");
+
+        while (true) {
+            System.out.print("Enter integer (or 'done'): ");
+            String input = scanner.next();
+
+            if (input.equalsIgnoreCase("done")) {
+                break;
+            }
+
+            try {
+                int num = Integer.parseInt(input);
+                intStore.addItem(num);
+            } catch (NumberFormatException e) {
+                System.out.println("'" + input + "' is not a valid integer. Please try again.");
+            }
+        }
+
+        System.out.println("\n--- Results ---");
+        System.out.print("Unsorted list: ");
+        intStore.printList();
+
+     
+        intStore.sortList();
+
+        System.out.print("Sorted list:   ");
+        intStore.printList();
+    }
+
+
+    private static void handleStrings(Scanner scanner) {
+        GenericStore<String> stringStore = new GenericStore<>();
+        System.out.println("\nEnter strings one by one (single words). Type 'done' when finished.");
+
+        while (true) {
+            System.out.print("Enter string (or 'done'): ");
+            String input = scanner.next(); 
+            if (input.equalsIgnoreCase("done")) {
+                break;
+            }
+
+            stringStore.addItem(input);
+        }
+
+        System.out.println("\n--- Results ---");
+        System.out.print("Unsorted list: ");
+        stringStore.printList();
+
+        
+        stringStore.sortList();
+
+        System.out.print("Sorted list:   ");
+        stringStore.printList();
+    }
+}
+
+class GenericStore<T extends Comparable<T>> {
+
+    
+    private ArrayList<T> list;
+
+
+    public GenericStore() {
+        this.list = new ArrayList<>();
+    }
+
+    public void addItem(T item) {
+        list.add(item);
+    }
+
+    public void sortList() {
+        Collections.sort(list);
+    }
+
+   
+    public void printList() {
+
+        System.out.println(list);
+    }
+}
